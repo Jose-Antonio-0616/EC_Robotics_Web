@@ -4,25 +4,25 @@ include 'components/connect.php';
 
 session_start();
 
-if(isset($_SESSION['user_id'])){
-   $user_id = $_SESSION['user_id'];
-}else{
-   $user_id = '';
-   header('location:user_login.php');
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    $user_id = '';
+    header('location:user_login.php');
 };
 
 include 'components/wishlist_cart.php';
 
-if(isset($_POST['delete'])){
-   $wishlist_id = $_POST['wishlist_id'];
-   $delete_wishlist_item = $conn->prepare("DELETE FROM `wishlist` WHERE id = ?");
-   $delete_wishlist_item->execute([$wishlist_id]);
+if (isset($_POST['delete'])) {
+    $wishlist_id = $_POST['wishlist_id'];
+    $delete_wishlist_item = $conn->prepare("DELETE FROM `wishlist` WHERE id = ?");
+    $delete_wishlist_item->execute([$wishlist_id]);
 }
 
-if(isset($_GET['delete_all'])){
-   $delete_wishlist_item = $conn->prepare("DELETE FROM `wishlist` WHERE user_id = ?");
-   $delete_wishlist_item->execute([$user_id]);
-   header('location:wishlist.php');
+if (isset($_GET['delete_all'])) {
+    $delete_wishlist_item = $conn->prepare("DELETE FROM `wishlist` WHERE user_id = ?");
+    $delete_wishlist_item->execute([$user_id]);
+    header('location:wishlist.php');
 }
 
 ?>
@@ -34,7 +34,7 @@ if(isset($_GET['delete_all'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wishlist</title>
+    <title>lista de deseos</title>
 
     <link rel="shortcut icon" href="./images/EC-Robotics-favicon.jpg" type="image/x-icon">
 
@@ -52,18 +52,18 @@ if(isset($_GET['delete_all'])){
 
     <section class="products">
 
-        <h3 class="heading">your wishlist</h3>
+        <h3 class="heading">tu lista de deseos</h3>
 
         <div class="box-container">
 
             <?php
-      $grand_total = 0;
-      $select_wishlist = $conn->prepare("SELECT * FROM `wishlist` WHERE user_id = ?");
-      $select_wishlist->execute([$user_id]);
-      if($select_wishlist->rowCount() > 0){
-         while($fetch_wishlist = $select_wishlist->fetch(PDO::FETCH_ASSOC)){
-            $grand_total += $fetch_wishlist['price'];  
-   ?>
+            $grand_total = 0;
+            $select_wishlist = $conn->prepare("SELECT * FROM `wishlist` WHERE user_id = ?");
+            $select_wishlist->execute([$user_id]);
+            if ($select_wishlist->rowCount() > 0) {
+                while ($fetch_wishlist = $select_wishlist->fetch(PDO::FETCH_ASSOC)) {
+                    $grand_total += $fetch_wishlist['price'];
+            ?>
             <form action="" method="post" class="box">
                 <input type="hidden" name="pid" value="<?= $fetch_wishlist['pid']; ?>">
                 <input type="hidden" name="wishlist_id" value="<?= $fetch_wishlist['id']; ?>">
@@ -83,18 +83,18 @@ if(isset($_GET['delete_all'])){
                     class="delete-btn" name="delete">
             </form>
             <?php
-      }
-   }else{
-      echo '<p class="empty">your wishlist is empty</p>';
-   }
-   ?>
+                }
+            } else {
+                echo '<p class="empty">tu lista de deseos esta vacía</p>';
+            }
+            ?>
         </div>
 
         <div class="wishlist-total">
-            <p>grand total : <span>$<?= $grand_total; ?>/-</span></p>
-            <a href="shop.php" class="option-btn">continue shopping</a>
-            <a href="wishlist.php?delete_all" class="delete-btn <?= ($grand_total > 1)?'':'disabled'; ?>"
-                onclick="return confirm('delete all from wishlist?');">delete all item</a>
+            <p>total : <span>$<?= $grand_total; ?>/-</span></p>
+            <a href="shop.php" class="option-btn">seguir comprando</a>
+            <a href="wishlist.php?delete_all" class="delete-btn <?= ($grand_total > 1) ? '' : 'disabled'; ?>"
+                onclick="return confirm('delete all from wishlist?');">eliminar todos los elementos</a>
         </div>
 
     </section>

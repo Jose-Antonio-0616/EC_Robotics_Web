@@ -4,30 +4,29 @@ include 'components/connect.php';
 
 session_start();
 
-if(isset($_SESSION['user_id'])){
-   $user_id = $_SESSION['user_id'];
-}else{
-   $user_id = '';
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    $user_id = '';
 };
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
 
-   $email = $_POST['email'];
-   $email = filter_var($email, FILTER_SANITIZE_STRING);
-   $pass = sha1($_POST['pass']);
-   $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+    $email = $_POST['email'];
+    $email = filter_var($email, FILTER_SANITIZE_STRING);
+    $pass = sha1($_POST['pass']);
+    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
 
-   $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ?");
-   $select_user->execute([$email, $pass]);
-   $row = $select_user->fetch(PDO::FETCH_ASSOC);
+    $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ?");
+    $select_user->execute([$email, $pass]);
+    $row = $select_user->fetch(PDO::FETCH_ASSOC);
 
-   if($select_user->rowCount() > 0){
-      $_SESSION['user_id'] = $row['id'];
-      header('location:home.php');
-   }else{
-      $message[] = 'incorrect username or password!';
-   }
-
+    if ($select_user->rowCount() > 0) {
+        $_SESSION['user_id'] = $row['id'];
+        header('location:home.php');
+    } else {
+        $message[] = '¡Nombre de usuario o contraseña incorrectos!';
+    }
 }
 
 ?>
@@ -39,7 +38,7 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>acceso</title>
 
     <link rel="shortcut icon" href="./images/EC-Robotics-favicon.jpg" type="image/x-icon">
 
@@ -58,14 +57,14 @@ if(isset($_POST['submit'])){
     <section class="form-container">
 
         <form action="" method="post">
-            <h3>login now</h3>
-            <input type="email" name="email" required placeholder="enter your email" maxlength="50" class="box"
+            <h3>Iniciar sesión</h3>
+            <input type="email" name="email" required placeholder="Introduce tu correo electrónico" maxlength="50"
+                class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+            <input type="password" name="pass" required placeholder="Ingresa tu contraseña" maxlength="20" class="box"
                 oninput="this.value = this.value.replace(/\s/g, '')">
-            <input type="password" name="pass" required placeholder="enter your password" maxlength="20" class="box"
-                oninput="this.value = this.value.replace(/\s/g, '')">
-            <input type="submit" value="login now" class="btn" name="submit">
-            <p>don't have an account?</p>
-            <a href="user_register.php" class="option-btn">register now</a>
+            <input type="submit" value="Iniciar sesión" class="btn" name="submit">
+            <p>no tienes una cuenta?</p>
+            <a href="user_register.php" class="option-btn">Registrar ahora</a>
         </form>
 
     </section>

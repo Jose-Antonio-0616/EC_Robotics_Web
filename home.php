@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 } else {
     $user_id = '';
-};
+}
 
 include 'components/wishlist_cart.php';
 
@@ -21,7 +21,7 @@ include 'components/wishlist_cart.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title>inicio</title>
 
     <link rel="shortcut icon" href="./images/EC-Robotics-favicon.jpg" type="image/x-icon">
 
@@ -49,7 +49,7 @@ include 'components/wishlist_cart.php';
 
                     <div class="swiper-slide slide">
                         <div class="image">
-                            <img src="images/home-img-1.png" alt="">
+                            <img src="images/home-img-1.jpg" alt="">
                         </div>
                         <div class="content">
                             <span></span>
@@ -71,12 +71,12 @@ include 'components/wishlist_cart.php';
 
                     <div class="swiper-slide slide">
                         <div class="image">
-                            <img src="images/home-img-3.png" alt="">
+                            <img src="images/home-img-3.jpg" alt="">
                         </div>
                         <div class="content">
                             <span>upto 10% off</span>
                             <h3></h3>
-                            <a href="shop.php" class="btn">shop now</a>
+                            <a href="shop.php" class="btn">Compra ahora</a>
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@ include 'components/wishlist_cart.php';
 
     <section class="category">
 
-        <h1 class="heading">shop by category</h1>
+        <h1 class="heading">Categorías</h1>
 
         <div class="swiper category-slider">
 
@@ -104,7 +104,7 @@ include 'components/wishlist_cart.php';
                 </a>
 
                 <a href="category.php?category=tv" class="swiper-slide slide">
-                    <img src="./images/icon-2.png" alt="">
+                    <img src="./images/icon-raspberry.png" alt="">
                     <h3>Raspberry</h3>
                 </a>
 
@@ -148,7 +148,7 @@ include 'components/wishlist_cart.php';
 
     <section class="home-products">
 
-        <h1 class="heading">latest products</h1>
+        <h1 class="heading">últimos productos</h1>
 
         <div class="swiper products-slider">
 
@@ -170,15 +170,15 @@ include 'components/wishlist_cart.php';
                             <img src="uploaded_img/<?= $fetch_product['image_01']; ?>" alt="">
                             <div class="name"><?= $fetch_product['name']; ?></div>
                             <div class="flex">
-                                <div class="price"><span>$</span><?= $fetch_product['price']; ?><span>/-</span></div>
+                                <div class="price"><span>Bs </span><?= $fetch_product['price']; ?><span>/-</span></div>
                                 <input type="number" name="qty" class="qty" min="1" max="99" onkeypress="if(this.value.length == 2) return false;" value="1">
                             </div>
-                            <input type="submit" value="add to cart" class="btn" name="add_to_cart">
+                            <input type="submit" value="agregar a carrito" class="btn" name="add_to_cart">
                         </form>
                 <?php
                     }
                 } else {
-                    echo '<p class="empty">no products added yet!</p>';
+                    echo '<p class="empty">¡Aún no se han añadido productos!</p>';
                 }
                 ?>
 

@@ -37,9 +37,9 @@ if(isset($_POST['order'])){
       $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
       $delete_cart->execute([$user_id]);
 
-      $message[] = 'order placed successfully!';
+      $message[] = 'pedido realizado con éxito!';
    }else{
-      $message[] = 'your cart is empty';
+      $message[] = 'Tu carrito esta vacío';
    }
 
 }
@@ -53,7 +53,7 @@ if(isset($_POST['order'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>checkout</title>
+    <title>verificar</title>
 
     <link rel="shortcut icon" href="./images/EC-Robotics-favicon.jpg" type="image/x-icon">
 
@@ -73,7 +73,7 @@ if(isset($_POST['order'])){
 
         <form action="" method="POST">
 
-            <h3>your orders</h3>
+            <h3>tus pedidos</h3>
 
             <div class="display-orders">
                 <?php
@@ -88,72 +88,58 @@ if(isset($_POST['order'])){
                $grand_total += ($fetch_cart['price'] * $fetch_cart['quantity']);
       ?>
                 <p> <?= $fetch_cart['name']; ?>
-                    <span>(<?= '$'.$fetch_cart['price'].'/- x '. $fetch_cart['quantity']; ?>)</span>
+                    <span>(<?= 'Bs. '.$fetch_cart['price'].'/- x '. $fetch_cart['quantity']; ?>)</span>
                 </p>
                 <?php
             }
          }else{
-            echo '<p class="empty">your cart is empty!</p>';
+            echo '<p class="empty">¡Tu carrito esta vacío!</p>';
          }
       ?>
                 <input type="hidden" name="total_products" value="<?= $total_products; ?>">
                 <input type="hidden" name="total_price" value="<?= $grand_total; ?>" value="">
-                <div class="grand-total">grand total : <span>$<?= $grand_total; ?>/-</span></div>
+                <div class="grand-total">total : <span>Bs. <?= $grand_total; ?>/-</span></div>
             </div>
 
-            <h3>place your orders</h3>
+            <h3>haz tus pedidos</h3>
 
             <div class="flex">
                 <div class="inputBox">
-                    <span>your name :</span>
-                    <input type="text" name="name" placeholder="enter your name" class="box" maxlength="20" required>
+                    <span>nombre :</span>
+                    <input type="text" name="name" placeholder="introduzce tu nombre" class="box" maxlength="20"
+                        required>
                 </div>
                 <div class="inputBox">
-                    <span>your number :</span>
-                    <input type="number" name="number" placeholder="enter your number" class="box" min="0"
+                    <span>número :</span>
+                    <input type="number" name="number" placeholder="introduce tu número" class="box" min="0"
                         max="9999999999" onkeypress="if(this.value.length == 10) return false;" required>
                 </div>
                 <div class="inputBox">
-                    <span>your email :</span>
-                    <input type="email" name="email" placeholder="enter your email" class="box" maxlength="50" required>
+                    <span>email :</span>
+                    <input type="email" name="email" placeholder="introduce tu email" class="box" maxlength="50"
+                        required>
                 </div>
                 <div class="inputBox">
-                    <span>payment method :</span>
+                    <span>método de pago :</span>
                     <select name="method" class="box" required>
-                        <option value="cash on delivery">cash on delivery</option>
-                        <option value="credit card">credit card</option>
-                        <option value="paytm">paytm</option>
-                        <option value="paypal">paypal</option>
+                        <option value="cash on delivery">efectivo</option>
+                        <option value="credit card">QR</option>
                     </select>
                 </div>
                 <div class="inputBox">
-                    <span>address line 01 :</span>
-                    <input type="text" name="flat" placeholder="e.g. flat number" class="box" maxlength="50" required>
+                    <span>dirección :</span>
+                    <input type="text" name="flat" placeholder="introduce tu dirección" class="box" maxlength="50"
+                        required>
                 </div>
                 <div class="inputBox">
-                    <span>address line 02 :</span>
-                    <input type="text" name="street" placeholder="e.g. street name" class="box" maxlength="50" required>
-                </div>
-                <div class="inputBox">
-                    <span>city :</span>
-                    <input type="text" name="city" placeholder="e.g. mumbai" class="box" maxlength="50" required>
-                </div>
-                <div class="inputBox">
-                    <span>state :</span>
-                    <input type="text" name="state" placeholder="e.g. maharashtra" class="box" maxlength="50" required>
-                </div>
-                <div class="inputBox">
-                    <span>country :</span>
-                    <input type="text" name="country" placeholder="e.g. India" class="box" maxlength="50" required>
-                </div>
-                <div class="inputBox">
-                    <span>pin code :</span>
-                    <input type="number" min="0" name="pin_code" placeholder="e.g. 123456" min="0" max="999999"
-                        onkeypress="if(this.value.length == 6) return false;" class="box" required>
+                    <span>ciudad :</span>
+                    <input type="text" name="city" placeholder="introduce tu ciudad" class="box" maxlength="50"
+                        required>
                 </div>
             </div>
 
-            <input type="submit" name="order" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>" value="place order">
+            <input type="submit" name="order" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>"
+                value="realizar pedido">
 
         </form>
 
