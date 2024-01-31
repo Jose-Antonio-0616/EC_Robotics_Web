@@ -19,7 +19,7 @@ if (!isset($admin_id)) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>panel de navegación</title>
+    <title>panel</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
@@ -33,28 +33,28 @@ if (!isset($admin_id)) {
 
     <section class="dashboard">
 
-        <h1 class="heading">dashboard</h1>
+        <h1 class="heading">panel</h1>
 
         <div class="box-container">
 
             <div class="box">
-                <h3>Bienvenido!</h3>
-                <p><?= $fetch_profile['nombre']; ?></p>
+                <h3>¡bienvenido!</h3>
+                <p><?= $fetch_profile['name']; ?></p>
                 <a href="update_profile.php" class="btn">actualizar perfil</a>
             </div>
 
             <div class="box">
                 <?php
                 $total_pendings = 0;
-                $select_pendings = $conn->prepare("SELECT * FROM `pedidos` WHERE estado = ?");
-                $select_pendings->execute(['pendiente']);
+                $select_pendings = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
+                $select_pendings->execute(['pending']);
                 if ($select_pendings->rowCount() > 0) {
                     while ($fetch_pendings = $select_pendings->fetch(PDO::FETCH_ASSOC)) {
-                        $total_pendings += $fetch_pendings['precio_total'];
+                        $total_pendings += $fetch_pendings['total_price'];
                     }
                 }
                 ?>
-                <h3><span>Bs. </span><?= $total_pendings; ?><span>/-</span></h3>
+                <h3><span>Bs </span><?= $total_pendings; ?><span>/-</span></h3>
                 <p>total pendientes</p>
                 <a href="placed_orders.php" class="btn">ver pedidos</a>
             </div>
@@ -62,22 +62,22 @@ if (!isset($admin_id)) {
             <div class="box">
                 <?php
                 $total_completes = 0;
-                $select_completes = $conn->prepare("SELECT * FROM `pedidos` WHERE estado = ?");
-                $select_completes->execute(['completado']);
+                $select_completes = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
+                $select_completes->execute(['completed']);
                 if ($select_completes->rowCount() > 0) {
                     while ($fetch_completes = $select_completes->fetch(PDO::FETCH_ASSOC)) {
-                        $total_completes += $fetch_completes['precio_total'];
+                        $total_completes += $fetch_completes['total_price'];
                     }
                 }
                 ?>
-                <h3><span>Bs. </span><?= $total_completes; ?><span>/-</span></h3>
-                <p>total completados</p>
+                <h3><span>Bs </span><?= $total_completes; ?><span>/-</span></h3>
+                <p>pedidos completados</p>
                 <a href="placed_orders.php" class="btn">ver pedidos</a>
             </div>
 
             <div class="box">
                 <?php
-                $select_orders = $conn->prepare("SELECT * FROM `pedidos`");
+                $select_orders = $conn->prepare("SELECT * FROM `orders`");
                 $select_orders->execute();
                 $number_of_orders = $select_orders->rowCount()
                 ?>
@@ -88,7 +88,7 @@ if (!isset($admin_id)) {
 
             <div class="box">
                 <?php
-                $select_products = $conn->prepare("SELECT * FROM `productos`");
+                $select_products = $conn->prepare("SELECT * FROM `products`");
                 $select_products->execute();
                 $number_of_products = $select_products->rowCount()
                 ?>
@@ -99,7 +99,7 @@ if (!isset($admin_id)) {
 
             <div class="box">
                 <?php
-                $select_users = $conn->prepare("SELECT * FROM `usuarios`");
+                $select_users = $conn->prepare("SELECT * FROM `users`");
                 $select_users->execute();
                 $number_of_users = $select_users->rowCount()
                 ?>
@@ -110,18 +110,18 @@ if (!isset($admin_id)) {
 
             <div class="box">
                 <?php
-                $select_admins = $conn->prepare("SELECT * FROM `administradores`");
+                $select_admins = $conn->prepare("SELECT * FROM `admins`");
                 $select_admins->execute();
                 $number_of_admins = $select_admins->rowCount()
                 ?>
                 <h3><?= $number_of_admins; ?></h3>
                 <p>administradores</p>
-                <a href="admin_accounts.php" class="btn">ver admins</a>
+                <a href="admin_accounts.php" class="btn">ver administradores</a>
             </div>
 
             <div class="box">
                 <?php
-                $select_messages = $conn->prepare("SELECT * FROM `mensajes`");
+                $select_messages = $conn->prepare("SELECT * FROM `messages`");
                 $select_messages->execute();
                 $number_of_messages = $select_messages->rowCount()
                 ?>

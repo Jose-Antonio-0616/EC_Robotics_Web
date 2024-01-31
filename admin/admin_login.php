@@ -6,21 +6,21 @@ session_start();
 
 if (isset($_POST['submit'])) {
 
-    $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
-    $pass = sha1($_POST['pass']);
-    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+   $name = $_POST['name'];
+   $name = filter_var($name, FILTER_SANITIZE_STRING);
+   $pass = sha1($_POST['pass']);
+   $pass = filter_var($pass, FILTER_SANITIZE_STRING);
 
-    $select_admin = $conn->prepare("SELECT * FROM `administradores` WHERE nombre = ? AND contrasena = ?");
-    $select_admin->execute([$name, $pass]);
-    $row = $select_admin->fetch(PDO::FETCH_ASSOC);
+   $select_admin = $conn->prepare("SELECT * FROM `admins` WHERE name = ? AND password = ?");
+   $select_admin->execute([$name, $pass]);
+   $row = $select_admin->fetch(PDO::FETCH_ASSOC);
 
-    if ($select_admin->rowCount() > 0) {
-        $_SESSION['admin_id'] = $row['id'];
-        header('location:dashboard.php');
-    } else {
-        $message[] = 'usuraio o contraseña incorrectos!';
-    }
+   if ($select_admin->rowCount() > 0) {
+      $_SESSION['admin_id'] = $row['id'];
+      header('location:dashboard.php');
+   } else {
+      $message[] = '¡Nombre de usuario o contraseña incorrectos!';
+   }
 }
 
 ?>
@@ -29,43 +29,43 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>acceso</title>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>acceso</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-    <link rel="stylesheet" href="../css/admin_style.css">
+   <link rel="stylesheet" href="../css/admin_style.css">
 
 </head>
 
 <body>
 
-    <?php
-    if (isset($message)) {
-        foreach ($message as $message) {
-            echo '
+   <?php
+   if (isset($message)) {
+      foreach ($message as $message) {
+         echo '
          <div class="message">
             <span>' . $message . '</span>
             <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
          </div>
          ';
-        }
-    }
-    ?>
+      }
+   }
+   ?>
 
-    <section class="form-container">
+   <section class="form-container">
 
-        <form action="" method="post">
-            <h3>inicio de sesión</h3>
-            <p>usurio predeterminado = <span>admin</span> & contraseña = <span>111</span></p>
-            <input type="text" name="name" required placeholder="nombre de usuario" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-            <input type="password" name="pass" required placeholder="contraseña" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-            <input type="submit" value="iniciar sesión" class="btn" name="submit">
-        </form>
+      <form action="" method="post">
+         <h3>iniciar sesión</h3>
+         <p>nombre de usuario = <span>admin</span> & contraseña = <span>111</span></p>
+         <input type="text" name="name" required placeholder="ingresar nombre de usuario" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="password" name="pass" required placeholder="ingresar contraseña" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="submit" value="iniciar sesión" class="btn" name="submit">
+      </form>
 
-    </section>
+   </section>
 
 </body>
 

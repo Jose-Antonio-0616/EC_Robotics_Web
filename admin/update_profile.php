@@ -12,10 +12,10 @@ if (!isset($admin_id)) {
 
 if (isset($_POST['submit'])) {
 
-   $name = $_POST['nombre'];
+   $name = $_POST['name'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
 
-   $update_profile_name = $conn->prepare("UPDATE `administradores` SET nombre = ? WHERE id = ?");
+   $update_profile_name = $conn->prepare("UPDATE `admins` SET name = ? WHERE id = ?");
    $update_profile_name->execute([$name, $admin_id]);
 
    $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
@@ -28,18 +28,18 @@ if (isset($_POST['submit'])) {
    $confirm_pass = filter_var($confirm_pass, FILTER_SANITIZE_STRING);
 
    if ($old_pass == $empty_pass) {
-      $message[] = 'por favor ingrese la contraseña anterior!';
+      $message[] = '¡Por favor ingrese la contraseña anterior!';
    } elseif ($old_pass != $prev_pass) {
-      $message[] = 'contraseña antigua no coincide!';
+      $message[] = '¡La contraseña anterior no coincide!';
    } elseif ($new_pass != $confirm_pass) {
-      $message[] = 'contraseña nueva no coincide!';
+      $message[] = '¡la nueva contraseña no coincide!';
    } else {
       if ($new_pass != $empty_pass) {
-         $update_admin_pass = $conn->prepare("UPDATE `administradores` SET contrasena = ? WHERE id = ?");
+         $update_admin_pass = $conn->prepare("UPDATE `admins` SET password = ? WHERE id = ?");
          $update_admin_pass->execute([$confirm_pass, $admin_id]);
-         $message[] = 'Contraseña actualizada exitosamente!';
+         $message[] = '¡Contraseña actualizada exitosamente!';
       } else {
-         $message[] = 'por favor ingrese una nueva contraseña!';
+         $message[] = '¡Por favor ingrese una nueva contraseña!';
       }
    }
 }
@@ -69,12 +69,12 @@ if (isset($_POST['submit'])) {
 
       <form action="" method="post">
          <h3>actualizar perfil</h3>
-         <input type="hidden" name="prev_pass" value="<?= $fetch_profile['contrasena']; ?>">
-         <input type="text" name="nombre" value="<?= $fetch_profile['nombre']; ?>" required placeholder="Ingrese su nombre de usuario" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="hidden" name="prev_pass" value="<?= $fetch_profile['password']; ?>">
+         <input type="text" name="name" value="<?= $fetch_profile['name']; ?>" required placeholder="Ingrese su nombre de usuario" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="password" name="old_pass" placeholder="ingrese la contraseña anterior" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="password" name="new_pass" placeholder="Introduzca nueva contraseña" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="password" name="confirm_pass" placeholder="confirmar nueva contraseña" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="submit" value="update now" class="btn" name="submit">
+         <input type="submit" value="actualizar" class="btn" name="submit">
       </form>
 
    </section>

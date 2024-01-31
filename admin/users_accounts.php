@@ -10,17 +10,17 @@ if (!isset($admin_id)) {
    header('location:admin_login.php');
 }
 
-if (isset($_GET['borrar'])) {
-   $delete_id = $_GET['borrar'];
-   $delete_user = $conn->prepare("DELETE FROM `usuarios` WHERE id = ?");
+if (isset($_GET['delete'])) {
+   $delete_id = $_GET['delete'];
+   $delete_user = $conn->prepare("DELETE FROM `users` WHERE id = ?");
    $delete_user->execute([$delete_id]);
-   $delete_orders = $conn->prepare("DELETE FROM `pedidos` WHERE usuario_id = ?");
+   $delete_orders = $conn->prepare("DELETE FROM `orders` WHERE user_id = ?");
    $delete_orders->execute([$delete_id]);
-   $delete_messages = $conn->prepare("DELETE FROM `mensajes` WHERE usuario_id = ?");
+   $delete_messages = $conn->prepare("DELETE FROM `messages` WHERE user_id = ?");
    $delete_messages->execute([$delete_id]);
-   $delete_cart = $conn->prepare("DELETE FROM `carro` WHERE usuario_id = ?");
+   $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
    $delete_cart->execute([$delete_id]);
-   $delete_wishlist = $conn->prepare("DELETE FROM `lista_de_deseos` WHERE usuario_id = ?");
+   $delete_wishlist = $conn->prepare("DELETE FROM `wishlist` WHERE user_id = ?");
    $delete_wishlist->execute([$delete_id]);
    header('location:users_accounts.php');
 }
@@ -53,23 +53,23 @@ if (isset($_GET['borrar'])) {
         <div class="box-container">
 
             <?php
-         $select_accounts = $conn->prepare("SELECT * FROM `usuarios`");
+         $select_accounts = $conn->prepare("SELECT * FROM `users`");
          $select_accounts->execute();
          if ($select_accounts->rowCount() > 0) {
             while ($fetch_accounts = $select_accounts->fetch(PDO::FETCH_ASSOC)) {
          ?>
             <div class="box">
                 <p> usuario id : <span><?= $fetch_accounts['id']; ?></span> </p>
-                <p> nombre de uuario : <span><?= $fetch_accounts['nombre']; ?></span> </p>
-                <p> email : <span><?= $fetch_accounts['email']; ?></span> </p>
+                <p> nombre de usuario : <br><span><?= $fetch_accounts['name']; ?></span> </p>
+                <p> email : <br><span><?= $fetch_accounts['email']; ?></span> </p>
                 <a href="users_accounts.php?delete=<?= $fetch_accounts['id']; ?>"
-                    onclick="return confirm('eliminar esta cuenta? La información relacionada con el usuario también se eliminará!')"
-                    class="delete-btn">borrar</a>
+                    onclick="return confirm('eliminar esta cuenta? ¡La información relacionada con el usuario también se eliminará!')"
+                    class="delete-btn">eliminar</a>
             </div>
             <?php
             }
          } else {
-            echo '<p class="empty">no hay cuentas disponibles!</p>';
+            echo '<p class="empty">¡No hay cuentas disponibles!</p>';
          }
          ?>
 
