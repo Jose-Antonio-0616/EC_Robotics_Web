@@ -18,11 +18,11 @@ if (isset($message)) {
         <a href="home.php" class="logo"><span>EC Robotics</span></a>
 
         <nav class="navbar">
-            <a href="home.php">home</a>
-            <a href="about.php">about</a>
-            <a href="orders.php">orders</a>
-            <a href="shop.php">shop</a>
-            <a href="contact.php">contact</a>
+            <a href="home.php">inicio</a>
+            <a href="about.php">acerca de</a>
+            <a href="orders.php">pedidos</a>
+            <a href="shop.php">tienda</a>
+            <a href="contact.php">contactos</a>
         </nav>
 
         <div class="icons">
@@ -49,21 +49,22 @@ if (isset($message)) {
             if ($select_profile->rowCount() > 0) {
                 $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
             ?>
-                <p><?= $fetch_profile["name"]; ?></p>
-                <a href="update_user.php" class="btn">update profile</a>
-                <div class="flex-btn">
-                    <a href="user_register.php" class="option-btn">register</a>
-                    <a href="user_login.php" class="option-btn">login</a>
-                </div>
-                <a href="components/user_logout.php" class="delete-btn" onclick="return confirm('logout from the website?');">logout</a>
+            <p><?= $fetch_profile["name"]; ?></p>
+            <a href="update_user.php" class="btn">actualizar perfil</a>
+            <div class="flex-btn">
+                <a href="user_register.php" class="option-btn">registrar</a>
+                <a href="user_login.php" class="option-btn">ingresar</a>
+            </div>
+            <a href="components/user_logout.php" class="delete-btn"
+                onclick="return confirm('¿cerrar sesión en el sitio web?');">cerrar sesión</a>
             <?php
             } else {
             ?>
-                <p>please login or register first!</p>
-                <div class="flex-btn">
-                    <a href="user_register.php" class="option-btn">register</a>
-                    <a href="user_login.php" class="option-btn">login</a>
-                </div>
+            <p>¡Por favor inicie sesión o regístrese primero!</p>
+            <div class="flex-btn">
+                <a href="user_register.php" class="option-btn">registrar</a>
+                <a href="user_login.php" class="option-btn">ingresar</a>
+            </div>
             <?php
             }
             ?>
